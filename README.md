@@ -8,4 +8,10 @@ Implemented HTTP server with buttons for manual relay control.
 
 URI = "/FF" + relay number + command. 
 
+Relay numbers: 00 = all ; 01 = 1st ; 02 = 2nd ; 03 = 3rd ; 04 = 4th.
+
 Commands: 00 = turn off ; 01 = turn on ; 02 = swap state.
+
+Swap all is not supported.
+
+Example command: http://1.1.1.1/FF0101
