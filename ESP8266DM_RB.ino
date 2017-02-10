@@ -23,7 +23,7 @@
 #define DEVICE_MODEL_NAME "DM3RB"
 #define TCPbufferMax 128
 #define BUFFER_SIZE 1500
-#define MAX_TCPSRV_CLIENTS 1
+#define GET_STATUS true
 static uint8_t buf[BUFFER_SIZE+1];
 char buttonstyle[]="width:22%;height:90px;display:block;padding:5px;margin:5px;border:2px ridge black;float:left;text-align: center;";
 int rstat[8] = {0,0,0,0,0,0,0,0};
@@ -34,9 +34,12 @@ int myChipId =666666;
 String lastResponse;
 String webPageContent;
 const char* STR_OKEY = "ok";
-const char*  STR_TRUE = "true";
+const char* STR_TRUE = "true";
 uint16_t plen, dat_p;
 char baseurl[]="";
+char static_ip[16] = "1.1.1.98";
+char static_gw[16] = "1.1.1.1";
+char static_sn[16] = "255.255.255.0";
 ESP8266WebServer HTTP(LISTEN_WEBSERVER_PORT);
 WiFiServer SERVERaREST(8080);
 WiFiClient tcpClient;
@@ -111,6 +114,13 @@ void VIMA_init(void){
         WiFiManager wifiManager;
         wifiManager.setDebugOutput(COMM_DEBUG_MODE);
         wifiManager.setAPStaticIPConfig(IPAddress(1,1,1,1), IPAddress(1,1,1,1), IPAddress(255,255,255,0));
+        if(static_ip){
+          IPAddress _ip,_gw,_sn;
+          _ip.fromString(static_ip);
+          _gw.fromString(static_gw);
+          _sn.fromString(static_sn);
+          wifiManager.setSTAStaticIPConfig(_ip, _gw, _sn);
+        }
         wifiManager.autoConnect("ESP8266DM");
 }
 void HTTP_handleRootPage() {

@@ -1,7 +1,7 @@
 void WEBprocessing(){
-    TOSR04_Relay_Status();
+    if(GET_STATUS){TOSR04_Relay_Status();}
     TOSR04_Relay_Control();
-    TOSR04_Relay_Status();
+    if(GET_STATUS){TOSR04_Relay_Status();}
     dm_print_webpage();
     HTTP.send(200,"text/html",webPageContent);
     webPageContent="";

@@ -49,12 +49,13 @@ void TOSR04_Relay_Control(){
 void TOSR04_Relay_Status(){
   byte inByte=0x00;
   int i=0;
-  unsigned long currentMillis;
-   previousMillis = millis();
+  unsigned long currentMillisR;
+  unsigned long previousMillisR = millis();
     UART_SERVER_PORT.flush();
     UART_SERVER_PORT.write("[", 1);
     while (UART_SERVER_PORT.available()==0 ){
-      currentMillis = millis();
+      currentMillisR = millis();
+      if (currentMillisR - previousMillisR >= interval) {break;}
       }
     if (UART_SERVER_PORT.available() > 0) {
       inByte = UART_SERVER_PORT.read();
